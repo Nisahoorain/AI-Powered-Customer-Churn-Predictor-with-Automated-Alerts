@@ -1,0 +1,163 @@
+High-Level Assignment Document
+For Students / Bootcamp Participants
+Assignment Title:
+Build an End-to-End AI Customer Churn Predictor with Automated Zapier Alerts
+(Real-World Project – Exactly What Freelance Clients Pay $150–$400 For in 2025)
+Deadline: 10 days
+Deliverables to Submit:
+
+GitHub repository (public)
+Live Streamlit dashboard (free hosting)
+Working Zapier automation (Slack OR Gmail OR Google Sheets)
+2–3 minute Loom video demo
+Short README explaining the business value
+
+Step-by-Step Instructions (Follow Exactly)
+Phase 1 – Days 1–2: Data & Model
+
+Download the Telco Customer Churn dataset
+→ https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+Create a new GitHub repo named “customer-churn-zapier”
+Train a churn model (Random Forest OR XGBoost/LightGBM – aim for ≥ 80% accuracy)
+→ Save the trained model as churn_model.pkl
+Create a Jupyter notebook “1_Train_Model.ipynb” showing:
+EDA (at least 3 visualizations)
+Preprocessing
+Model training & evaluation
+Feature importance plot
+
+
+Phase 2 – Days 3–5: Streamlit Dashboard
+5. Create churn_app.py 
+
+
+
+
+
+
+
+Requirements the app MUST have:
+
+File uploader (CSV/Excel)
+Show churn probability for each customer
+Highlight high-risk customers in red
+Big green button “Send Alerts via Zapier”
+
+
+Deploy for free on https://share.streamlit.io
+→ You will get a public link like https://yourname-churn.streamlit.app
+
+Phase 3 – Days 6–8: Zapier Automation
+7. Sign up free at zapier.com
+8. Create a new Zap → Trigger = “Webhooks by Zapier” → Catch Hook
+→ Copy the webhook URL
+9. Paste that URL into your Streamlit app code
+10. Add at least ONE action (choose one or all):
+
+Send Slack message to a channel
+Send Gmail with customer name + probability
+Add row to Google Sheet
+Create task in Notion/ClickUp/Trello
+
+
+Test end-to-end: upload a file → click button → see alert appear instantly
+
+Phase 4 – Days 9–10: Polish & Submit
+12. Record a 2–3 min Loom video showing:
+
+Live dashboard
+Uploading a file
+Predictions appearing
+Clicking the button → alert arriving in Slack/Gmail
+
+
+Write a beautiful README.md with:
+Project title & 2-sentence business value
+Screenshots + live links
+How to run locally
+Tech stack list
+
+Submit everything via Google Form (or wherever your instructor says)
+
+Grading Rubric (100 points)
+
+Working model with ≥ 78% accuracy – 20 pts
+Clean, deployed Streamlit dashboard – 25 pts
+Zapier automation actually triggers – 25 pts
+Professional GitHub repo + README – 15 pts
+Loom demo video – 10 pts
+Code quality & comments – 5 pts
+
+Bonus (Extra +20 points & Certificate of Excellence)
+
+Add Google Sheets live connection (no file upload needed)
+Use LightGBM instead of Random Forest (usually 2–4% higher accuracy)
+Add email template with personalized retention offer
+Deploy backend with FastAPI + webhook instead of Streamlit button
+
+
+
+Exact Output Your Students MUST Deliver
+(Submit all 6 items – no exceptions)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Required OutputExact Format / LinkWhat the Instructor Will Check1GitHub Repository (public)https://github.com/yourname/customer-churn-zapier• Clean folder structure  
+• README.md with title, screenshots, live links  
+• At least 3 files: train_model.ipynb + churn_app.py + churn_model.pkl2Live Streamlit Dashboard (working 24/7)https://yourname-churn-predictor.streamlit.app• Upload CSV → shows churn probability table  
+• Red highlights for high-risk customers  
+• Big green button “Send Alerts via Zapier”3Working Zapier Automation (proof it fires)Screenshot OR short video clip• When button is clicked → Slack message OR Gmail OR Google Sheet row is created instantly  
+• Must include customer name + probability in the message/row4Loom Demo Video (2–3 minutes max)https://loom.com/share/xxxxxxxxxxxxxxxxxMust show in one take:  
+1. Open live Streamlit link  
+2. Upload sample CSV  
+3. Predictions appear  
+4. Click button → alert arrives in Slack/Gmail/Sheets5Sample Test CSV (inside GitHub repo)test_customers.csv• 10–20 rows with realistic columns (Name, Email, Tenure, MonthlyCharges, etc.)  
+• At least 3–5 rows must be predicted as “High Risk”6Short Report in README (150–250 words)Inside README.mdAnswer these exact questions:  
+• What business problem does this solve?  
+• Final model accuracy (%)  
+• Which Zapier action did you choose and why?  
+• One sentence: “How much money can a company save using this?”
