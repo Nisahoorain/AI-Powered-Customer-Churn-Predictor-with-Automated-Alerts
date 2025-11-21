@@ -61,6 +61,44 @@ def load_model():
         st.error("⚠️ Model files not found! Please run the training notebook first to generate churn_model.pkl and preprocessing.pkl")
         return None, None
 
+# Function to generate retention recommendations
+def get_retention_recommendation(row):
+    """Generate personalized retention recommendations based on customer features"""
+    recommendations = []
+    
+    tenure = row.get('tenure', 0)
+    contract = str(row.get('Contract', '')).lower()
+    monthly_charges = row.get('MonthlyCharges', 0)
+    online_security = str(row.get('OnlineSecurity', '')).lower()
+    tech_support = str(row.get('TechSupport', '')).lower()
+    payment_method = str(row.get('PaymentMethod', '')).lower()
+    
+    # Low tenure + month-to-month contract
+    if tenure < 12 and 'month-to-month' in contract:
+        recommendations.append("🎯 Offer 6-month discount contract to increase commitment")
+    
+    # High monthly charges + no security
+    if monthly_charges > 80 and ('no' in online_security or 'no internet' in online_security):
+        recommendations.append("🔒 Bundle online security for free to increase value perception")
+    
+    # No tech support + high charges
+    if monthly_charges > 70 and ('no' in tech_support or 'no internet' in tech_support):
+        recommendations.append("🛠️ Offer free tech support trial to improve satisfaction")
+    
+    # Electronic check payment (higher churn risk)
+    if 'electronic check' in payment_method:
+        recommendations.append("💳 Offer discount for switching to automatic payment")
+    
+    # Long tenure but high risk
+    if tenure > 24 and len(recommendations) == 0:
+        recommendations.append("⭐ Loyalty reward program - special offer for long-term customers")
+    
+    # Default recommendation
+    if len(recommendations) == 0:
+        recommendations.append("📞 Personal outreach from customer success team")
+    
+    return " | ".join(recommendations) if recommendations else "📞 Contact customer success team"
+
 # Initialize session state
 if 'predictions_made' not in st.session_state:
     st.session_state.predictions_made = False
@@ -86,6 +124,20 @@ with st.sidebar:
         placeholder="https://hooks.zapier.com/... or https://hook.us1.make.com/...",
         help="Get this URL from Make.com (free), Zapier, n8n, or IFTTT"
     )
+    
+    # Probability threshold for churn prediction (business trade-off)
+    st.subheader("🎯 Prediction Threshold")
+    st.caption("Adjust sensitivity: Lower = catch more churners (higher recall), Higher = fewer false positives")
+    prediction_threshold = st.slider(
+        "Churn Probability Threshold",
+        min_value=0.20,
+        max_value=0.70,
+        value=0.35,
+        step=0.05,
+        format="%.2f",
+        help="Probability threshold for predicting churn. Lower values catch more churners but may have more false positives."
+    )
+    st.caption(f"Current: {prediction_threshold*100:.0f}% - {'Very Sensitive' if prediction_threshold < 0.3 else 'Balanced' if prediction_threshold < 0.5 else 'Strict'}")
     
     # Risk threshold
     st.subheader("Risk Thresholds")
@@ -182,14 +234,18 @@ if uploaded_file is not None:
                         # Select only the features the model expects
                         X = df_processed[feature_names]
                         
-                        # Make predictions
+                        # Make predictions using custom threshold
                         predictions_proba = model.predict_proba(X)[:, 1]  # Probability of churn
-                        predictions = model.predict(X)
+                        # Use custom threshold instead of default 0.5
+                        predictions = (predictions_proba >= prediction_threshold).astype(int)
                         
                         # Create results dataframe
                         results_df = df.copy()
                         results_df['Churn_Probability'] = (predictions_proba * 100).round(2)
                         results_df['Predicted_Churn'] = ['Yes' if p == 1 else 'No' for p in predictions]
+                        
+                        # Add retention recommendations
+                        results_df['Retention_Recommendation'] = results_df.apply(get_retention_recommendation, axis=1)
                         
                         # Add risk level
                         results_df['Risk_Level'] = results_df['Churn_Probability'].apply(
@@ -229,8 +285,25 @@ if uploaded_file is not None:
                 avg_prob = results_df['Churn_Probability'].mean()
                 st.metric("Average Churn Probability", f"{avg_prob:.1f}%")
             
+            # Feature Importance Visualization
+            if model is not None and hasattr(model, 'feature_importances_'):
+                st.markdown("---")
+                st.subheader("📈 Feature Importance")
+                st.caption("Top features driving churn predictions")
+                
+                feature_importance_df = pd.DataFrame({
+                    'Feature': preprocessing['feature_names'],
+                    'Importance': model.feature_importances_
+                }).sort_values('Importance', ascending=False).head(10)
+                
+                st.bar_chart(feature_importance_df.set_index('Feature')['Importance'])
+                
+                with st.expander("View all feature importances"):
+                    st.dataframe(feature_importance_df, use_container_width=True)
+            
             # Display results table with styling
-            st.subheader("📋 Detailed Predictions")
+            st.markdown("---")
+            st.subheader("📋 Detailed Predictions with Retention Recommendations")
             
             # Color code the dataframe
             def highlight_risk(row):
