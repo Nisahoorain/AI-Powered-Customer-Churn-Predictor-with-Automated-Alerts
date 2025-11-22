@@ -46,15 +46,15 @@ ai-powered-customer-churn-predictor/
 
 ## Live Demo
 
-🔗 **Streamlit Dashboard**: [Your Streamlit App Link Here]
+🔗 **Streamlit Dashboard**: https://ai-powered-customer-churn-predictor-with-automated-alerts-ani9.streamlit.app/
 
-📹 **Demo Video**: [Your Loom Video Link Here]
+📹 **Demo Video**: https://www.loom.com/share/d92bb33c143b4f5885d09513d13d4bae
 
 ## How to Run Locally
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourname/ai-powered-customer-churn-predictor-with-automated-alerts.git
+   git clone https://github.com/Nisahoorain/AI-Powered-Customer-Churn-Predictor-with-Automated-Alerts.git
    cd ai-powered-customer-churn-predictor-with-automated-alerts
    ```
 
