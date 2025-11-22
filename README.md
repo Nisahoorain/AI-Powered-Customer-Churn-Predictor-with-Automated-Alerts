@@ -1,5 +1,7 @@
 # AI-Powered Customer Churn Predictor with Automated Alerts
 
+> **Note:** This project was built for portfolio and learning purposes. It demonstrates end-to-end machine learning deployment, web application development, and automation integration.
+
 ## Project Overview
 
 This project is an end-to-end AI-powered customer churn prediction system that helps businesses identify at-risk customers and automatically trigger retention actions through Make.com webhook integrations.
@@ -29,6 +31,13 @@ This project is an end-to-end AI-powered customer churn prediction system that h
 - **Web App**: Streamlit
 - **Automation**: Make.com Webhooks (free alternative to Zapier)
 - **Deployment**: Streamlit Community Cloud
+
+## ⚠️ Security Note
+
+**This project is for portfolio/educational purposes.** 
+- Webhook URLs are entered by users (not hardcoded)
+- No API keys or secrets are stored in the code
+- See [SECURITY.md](SECURITY.md) for security best practices
 
 ## Project Structure
 
@@ -187,11 +196,15 @@ For a 1,000 customer base, the improved model saves an additional **$3,000-$4,00
 
 ## License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
 Built as part of a data science bootcamp assignment demonstrating real-world ML application and automation integration.
+
+## Disclaimer
+
+This project is for **portfolio and educational purposes**. While it demonstrates real-world ML deployment practices, it should not be used in production without proper security reviews, testing, and compliance checks.
 
 ---
 

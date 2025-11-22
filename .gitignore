@@ -49,6 +49,20 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+.env.*
+*.env
+
+# API Keys and Secrets
+*_key.txt
+*_secret.txt
+secrets.json
+config.json
+credentials.json
+
+# Webhook URLs (if you want to keep them private)
+webhook_url.txt
+zapier_webhook.txt
+make_webhook.txt
 
 # Streamlit
 .streamlit/
