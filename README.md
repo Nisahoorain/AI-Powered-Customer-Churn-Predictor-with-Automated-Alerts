@@ -208,5 +208,5 @@ This project is for **portfolio and educational purposes**. While it demonstrate
 
 ---
 
-*This project showcases end-to-end machine learning deployment, from data analysis and model training to web application development and workflow automation—exactly what freelance clients pay $150-$400 for in 2025.*
+
 
